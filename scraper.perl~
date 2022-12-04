@@ -23,22 +23,6 @@ my $root = HTML::TreeBuilder->new();
 
 my $request = $ua->get($url) or die "Cannot contact page $!\n";
 
-my @letters = ("A","B","C","Č","Ć","D","Dž","Đ","E","F","G","H","I","J","K","L","Lj","M","N","Nj","O","P","R","S","Š","T","U","V","Z","Ž");
-
-
-
-sub extract_grammar {
-    my ($str) = @_;
-
-    my $case = "";
-    if( $str =~ /([A-Z]\s)/ ){
-	$case = $1;
-    }
-    my @parts = $str  =~ /([a-z\x{017E}]+.\s)/g;
-    $str =~ /([^\s.A-Z]*)\s*$/;
-    return $case,$1,@parts;
-}
-    
 if ($request->is_success) {
   $root->parse(decode_utf8 $request->content);
   foreach my $tr ($root->look_down(_tag  => "tr")){
@@ -54,24 +38,14 @@ if ($request->is_success) {
       #my $match = /\x{2329}[^;,\x{2329}\x{232A}]*?[;,]??([^;,\x{2329}\x{232A}]*).*\x{232A}/;
       #my @ts = $desc =~ $match;
 
-      print "word: $word \n";
+      print "$word: ";
       if( $desc =~ /\x{2329}(.*?)\x{232A}/ ){	  
 	  my $snd = $1;
 	  
 
 	  my @words = $1 =~ /([^;,]*)[;,]/g;
 	  push(@words, $snd =~ /^.*?[;,]?([^;,]*)$/);
-	  foreach (@words){
-	      $_ =~ /^\s*(.*?)\s*$/;
-	      my ($case,$str,@parts) = extract_grammar($1);
-	      my @forms = split(/\//,$str);
-	      print "forms: ";
-	      print join(" | ",@forms);
-	      print " case: $case parts: ";
-	      print join(" | ", @parts);
-	      print "\n";
-	  }
-	  print "*****************";
+	  print join(" | ", @words);
       }
       print "\n";
       #print join(" | ", @ts);

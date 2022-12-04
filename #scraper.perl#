@@ -64,6 +64,7 @@ if ($request->is_success) {
 	  foreach (@words){
 	      $_ =~ /^\s*(.*?)\s*$/;
 	      my ($case,$str,@parts) = extract_grammar($1);
+	      
 	      my @forms = split(/\//,$str);
 	      print "forms: ";
 	      print join(" | ",@forms);
