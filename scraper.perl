@@ -21,15 +21,10 @@ my $formatter = HTML::FormatText->new(leftmargin => 0, rightmargin => 50);
 
 my $root = HTML::TreeBuilder->new();
 
-#my $request = $ua->get($url) or die "Cannot contact page $!\n";
+my $letter = "H";
+my $page = 1;
 
-my $file = "index.html";
-my $document = do {
-    local $/ = undef;
-    open my $fh, "<", $file
-        or die "could not open $file: $!";
-    <$fh>;
-};
+my $document = `node index.js $letter $page`;
 
 #my @letters = ("A","B","C","Č","Ć","D","Dž","Đ","E","F","G","H","I","J","K","L","Lj","M","N","Nj","O","P","R","S","Š","T","U","V","Z","Ž");
 
@@ -46,7 +41,9 @@ sub extract_grammar {
     $str =~ /([^\s.A-Z]*)\s*$/;
     return $case,$1,@parts;
 }
-    
+
+
+
 #if ($request->is_success) {
 if (0==0){
     $root->parse($document);
