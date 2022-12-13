@@ -21,10 +21,10 @@ my $formatter = HTML::FormatText->new(leftmargin => 0, rightmargin => 50);
 
 my $root = HTML::TreeBuilder->new();
 
-my $letter = "H";
+my $letter = "Ž";
 my $page = 1;
 
-my $document = `node index.js $letter $page`;
+my $document = `node index.js $letter`;
 
 #my @letters = ("A","B","C","Č","Ć","D","Dž","Đ","E","F","G","H","I","J","K","L","Lj","M","N","Nj","O","P","R","S","Š","T","U","V","Z","Ž");
 
